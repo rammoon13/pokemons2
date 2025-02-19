@@ -240,7 +240,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/seach?query=Char
      */
-    @GetMapping("/search")
+    @GetMapping("/search") // probado
     public List<Pokemon> searchPokemon(@RequestParam String query) {
         return pokemonService.searchPokemonByName(query);
     }
