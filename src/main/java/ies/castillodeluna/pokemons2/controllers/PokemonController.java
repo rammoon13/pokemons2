@@ -24,7 +24,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons
      */
-    @GetMapping
+    @GetMapping // probado
     public List<Pokemon> getAllPokemons() {
         return pokemonService.getAllPokemons();
     }
@@ -36,7 +36,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/1
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // probado
     public Pokemon getPokemonById(@PathVariable Long id) {
         return pokemonService.getPokemonById(id);
     }
@@ -48,7 +48,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/name/Bulbasaur
      */
-    @GetMapping("/name/{name}")
+    @GetMapping("/name/{name}") // probado
     public Pokemon getPokemonByName(@PathVariable String name) {
         return pokemonService.getPokemonByName(name);
     }
@@ -60,7 +60,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/top-hp
      */
-    @GetMapping("/top-hp")
+    @GetMapping("/top-hp") // probado
     public List<Pokemon> getTopHP() {
         return pokemonService.getTopPokemonByHP();
     }
@@ -72,7 +72,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/level-range?min=10&max=50
      */
-    @GetMapping("/level-range")
+    @GetMapping("/level-range") // probado
     public List<Pokemon> getPokemonsByLevelRange(@RequestParam int min, @RequestParam int max) {
         return pokemonService.getPokemonsByLevelRange(min, max);
     }
@@ -91,7 +91,7 @@ public class PokemonController {
      *   "level": 5
      * }
      */
-    @PostMapping
+    @PostMapping // probado 
     public Pokemon createPokemon(@RequestBody Pokemon pokemon) {
         return pokemonService.createPokemon(pokemon);
     }
@@ -108,7 +108,7 @@ public class PokemonController {
      *   { "name": "Pikachu", "type": "Eléctrico", "hitPoints": 35, "level": 5 }
      * ]
      */
-    @PostMapping("/bulk")
+    @PostMapping("/bulk") // probado
     public List<Pokemon> createMultiplePokemons(@RequestBody List<Pokemon> pokemons) {
         return pokemonService.createMultiplePokemons(pokemons);
     }
@@ -122,7 +122,7 @@ public class PokemonController {
      * - Body (JSON):
      * { "level": 10 }
      */
-    @PutMapping("/{id}/level")
+    @PutMapping("/{id}/level") // probado
     public Pokemon updatePokemonLevel(@PathVariable Long id, @RequestBody Map<String, Integer> levelRequest) {
         return pokemonService.updatePokemonLevel(id, levelRequest.get("level"));
     }
@@ -136,7 +136,7 @@ public class PokemonController {
      * - Body (JSON):
      * { "type": "Agua" }
      */
-    @PutMapping("/{id}/type")
+    @PutMapping("/{id}/type") // probado
     public Pokemon updatePokemonType(@PathVariable Long id, @RequestBody Map<String, String> typeRequest) {
         return pokemonService.updatePokemonType(id, typeRequest.get("type"));
     }
@@ -150,7 +150,7 @@ public class PokemonController {
      * - Body (JSON):
      * { "name": "Raichu" }
      */
-    @PutMapping("/{id}/name")
+    @PutMapping("/{id}/name") // probado
     public Pokemon updatePokemonName(@PathVariable Long id, @RequestBody Map<String, String> nameRequest) {
         return pokemonService.updatePokemonName(id, nameRequest.get("name"));
     }
@@ -162,7 +162,7 @@ public class PokemonController {
      * - Método: PUT
      * - URL: http://localhost:8080/api/pokemons/level-up/type/Fuego
      */
-    @PutMapping("/level-up/type/{type}")
+    @PutMapping("/level-up/type/{type}") // probado (No sirve para los doble tipo)
     public List<Pokemon> levelUpByType(@PathVariable String type) {
         return pokemonService.levelUpPokemonsByType(type);
     }
@@ -180,7 +180,7 @@ public class PokemonController {
      *   "newHP": "78"
      * }
      */
-    @PutMapping("/evolve/{id}")
+    @PutMapping("/evolve/{id}") // probado
     public Pokemon evolvePokemon(@PathVariable Long id, @RequestBody Map<String, String> evolutionData) {
         return pokemonService.evolvePokemon(id, evolutionData.get("newName"), evolutionData.get("newType"), Integer.parseInt(evolutionData.get("newHP")));
     }
@@ -192,7 +192,7 @@ public class PokemonController {
      * - Método: DELETE
      * - URL: http://localhost:8080/api/pokemons/1
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // probado
     public void deletePokemon(@PathVariable Long id) {
         pokemonService.deletePokemon(id);
     }
@@ -204,7 +204,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/filter?type=Agua
      */
-    @GetMapping("/filter")
+    @GetMapping("/filter") // probado
     public List<Pokemon> filterByType(@RequestParam String type) {
         return pokemonService.filterByType(type);
     }
@@ -216,7 +216,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/hitpoints?min=30&max=60
      */
-    @GetMapping("/hitpoints")
+    @GetMapping("/hitpoints") // probado
     public List<Pokemon> filterByHitPoints(@RequestParam Long min, @RequestParam Long max) {
         return pokemonService.filterByHitPoints(min, max);
     }
@@ -228,7 +228,7 @@ public class PokemonController {
      * - Método: GET
      * - URL: http://localhost:8080/api/pokemons/stats
      */
-    @GetMapping("/stats")
+    @GetMapping("/stats") // probado
     public Map<String, Object> getPokedexStats() {
         return pokemonService.getPokedexStats();
     }
