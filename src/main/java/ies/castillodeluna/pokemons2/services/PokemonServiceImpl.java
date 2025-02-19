@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PokemonServiceImpl implements PokemonService {
@@ -122,11 +123,26 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public Map<String, Object> getPokedexStats() {
-        Map<String, Object> stats = new HashMap<>();
-        stats.put("total_pokemons", pokemonRepository.count());
-        stats.put("average_hp", pokemonRepository.findAverageHitPoints());
-        stats.put("max_level", pokemonRepository.findMaxLevel());
-        return stats;
-    }
+public Map<String, Object> getPokedexStats() {
+    Map<String, Object> stats = new HashMap<>();
+    stats.put("total_pokemons", pokemonRepository.count());
+    stats.put("average_hp", pokemonRepository.findAverageHitPoints());
+    stats.put("max_level", pokemonRepository.findMaxLevel());
+
+    // Obtener el conteo de Pokémon por tipo
+    Map<String, Long> typeCounts = pokemonRepository.countPokemonsByType()
+        .stream()
+        .collect(Collectors.toMap(
+            data -> (String) data[0],
+            data -> (Long) data[1]
+        ));
+    
+    stats.put("pokemon_by_type", typeCounts);
+    return stats;
+}
+
+@Override
+public List<Pokemon> searchPokemonByName(String name) {
+    return pokemonRepository.findByNameContainingIgnoreCase(name);
+}
 }

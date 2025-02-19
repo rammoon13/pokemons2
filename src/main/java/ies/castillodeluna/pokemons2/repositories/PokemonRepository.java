@@ -23,4 +23,9 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
     @Query("SELECT MAX(p.level) FROM Pokemon p")
     Integer findMaxLevel();
+
+    List<Pokemon> findByNameContainingIgnoreCase(String name);
+
+    @Query("SELECT p.type, COUNT(p) FROM Pokemon p GROUP BY p.type")
+    List<Object[]> countPokemonsByType();
 }

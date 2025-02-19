@@ -22,4 +22,5 @@ public interface PokemonService {
     List<Pokemon> filterByType(String type);
     List<Pokemon> filterByHitPoints(Long min, Long max);
     Map<String, Object> getPokedexStats();
+    List<Pokemon> searchPokemonByName(String name);
 }

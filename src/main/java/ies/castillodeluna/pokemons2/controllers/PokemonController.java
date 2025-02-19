@@ -232,4 +232,16 @@ public class PokemonController {
     public Map<String, Object> getPokedexStats() {
         return pokemonService.getPokedexStats();
     }
+
+     /**
+     * GET /api/pokemons/search?query=Char
+     * Obtiene el pokemon que contenga la palabra en el query.
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/seach?query=Char
+     */
+    @GetMapping("/search")
+    public List<Pokemon> searchPokemon(@RequestParam String query) {
+        return pokemonService.searchPokemonByName(query);
+    }
 }
