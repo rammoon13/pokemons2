@@ -4,9 +4,10 @@ import ies.castillodeluna.pokemons2.models.Pokemon;
 import ies.castillodeluna.pokemons2.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class PokemonServiceImpl implements PokemonService {
@@ -28,21 +29,86 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
+    public Pokemon getPokemonByName(String name) {
+        return pokemonRepository.findByName(name);
+    }
+
+    @Override
+    public List<Pokemon> getTopPokemonByHP() {
+        return pokemonRepository.findTop5ByOrderByHitPointsDesc();
+    }
+
+    @Override
+    public List<Pokemon> getPokemonsByLevelRange(int min, int max) {
+        return pokemonRepository.findByLevelBetween(min, max);
+    }
+
+    @Override
     public Pokemon createPokemon(Pokemon pokemon) {
         return pokemonRepository.save(pokemon);
     }
 
     @Override
-    public void deletePokemon(Long id) {
-        pokemonRepository.deleteById(id);
+    public List<Pokemon> createMultiplePokemons(List<Pokemon> pokemons) {
+        return pokemonRepository.saveAll(pokemons);
     }
 
     @Override
-    public Pokemon updatePokemonLevel(Long id, Integer newLevel) {
-        return pokemonRepository.findById(id).map(pokemon -> {
+    public Pokemon updatePokemonLevel(Long id, int newLevel) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
             pokemon.setLevel(newLevel);
             return pokemonRepository.save(pokemon);
-        }).orElse(null);
+        }
+        return null;
+    }
+
+    @Override
+    public Pokemon updatePokemonType(Long id, String newType) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setType(newType);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public Pokemon updatePokemonName(Long id, String newName) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setName(newName);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Pokemon> levelUpPokemonsByType(String type) {
+        List<Pokemon> pokemons = pokemonRepository.findByType(type);
+        pokemons.forEach(pokemon -> pokemon.setLevel(pokemon.getLevel() + 1));
+        return pokemonRepository.saveAll(pokemons);
+    }
+
+    @Override
+    public Pokemon evolvePokemon(Long id, String newName, String newType, int newHP) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setName(newName);
+            pokemon.setType(newType);
+            pokemon.setHitPoints((long) newHP);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public void deletePokemon(Long id) {
+        pokemonRepository.deleteById(id);
     }
 
     @Override
@@ -57,16 +123,10 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public Map<String, Object> getPokedexStats() {
-        List<Pokemon> allPokemons = pokemonRepository.findAll();
-
-        double averageLevel = allPokemons.stream().mapToInt(Pokemon::getLevel).average().orElse(0);
-        double averageHitPoints = allPokemons.stream().mapToLong(Pokemon::getHitPoints).average().orElse(0);
-        Map<String, Long> countByType = allPokemons.stream().collect(Collectors.groupingBy(Pokemon::getType, Collectors.counting()));
-
-        return Map.of(
-            "averageLevel", averageLevel,
-            "averageHitPoints", averageHitPoints,
-            "countByType", countByType
-        );
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total_pokemons", pokemonRepository.count());
+        stats.put("average_hp", pokemonRepository.findAverageHitPoints());
+        stats.put("max_level", pokemonRepository.findMaxLevel());
+        return stats;
     }
 }
