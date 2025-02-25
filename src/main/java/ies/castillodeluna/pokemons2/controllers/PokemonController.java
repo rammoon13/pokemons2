@@ -244,4 +244,52 @@ public class PokemonController {
     public List<Pokemon> searchPokemon(@RequestParam String query) {
         return pokemonService.searchPokemonByName(query);
     }
+
+    /**
+     * GET /api/pokemons/filter/shiny
+     * Obtiene todos los Pokémon shiny.
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/filter/shiny
+     */
+    @GetMapping("/filter/shiny")
+    public List<Pokemon> getShinyPokemons() {
+        return pokemonService.getShinyPokemons();
+    }
+
+    /**
+     * GET /api/pokemons/filter/mega
+     * Obtiene todos los Pokémon con megaevolución.
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/filter/mega
+     */
+    @GetMapping("/filter/mega")
+    public List<Pokemon> getMegaEvolutions() {
+        return pokemonService.getMegaEvolutionPokemons();
+    }
+
+    /**
+     * GET /api/pokemons/filter/starter
+     * Obtiene todos los Pokémon iniciales.
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/filter/starter
+     */
+    @GetMapping("/filter/starter")
+    public List<Pokemon> getStarterPokemons() {
+        return pokemonService.getStarterPokemons();
+    }
+
+    /**
+     * GET /api/pokemons/filter/generation/{generation}
+     * Obtiene los Pokémon de una generación específica.
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/filter/generation/1
+     */
+    @GetMapping("/filter/generation/{generation}")
+    public List<Pokemon> getPokemonsByGeneration(@PathVariable int generation) {
+        return pokemonService.getPokemonsByGeneration(generation);
+    }
 }

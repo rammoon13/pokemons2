@@ -123,26 +123,45 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-public Map<String, Object> getPokedexStats() {
-    Map<String, Object> stats = new HashMap<>();
-    stats.put("total_pokemons", pokemonRepository.count());
-    stats.put("average_hp", pokemonRepository.findAverageHitPoints());
-    stats.put("max_level", pokemonRepository.findMaxLevel());
+    public Map<String, Object> getPokedexStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total_pokemons", pokemonRepository.count());
+        stats.put("average_hp", pokemonRepository.findAverageHitPoints());
+        stats.put("max_level", pokemonRepository.findMaxLevel());
 
-    // Obtener el conteo de Pokémon por tipo
-    Map<String, Long> typeCounts = pokemonRepository.countPokemonsByType()
-        .stream()
-        .collect(Collectors.toMap(
-            data -> (String) data[0],
-            data -> (Long) data[1]
-        ));
-    
-    stats.put("pokemon_by_type", typeCounts);
-    return stats;
-}
+        Map<String, Long> typeCounts = pokemonRepository.countPokemonsByType()
+            .stream()
+            .collect(Collectors.toMap(
+                data -> (String) data[0],
+                data -> (Long) data[1]
+            ));
+        
+        stats.put("pokemon_by_type", typeCounts);
+        return stats;
+    }
 
-@Override
-public List<Pokemon> searchPokemonByName(String name) {
-    return pokemonRepository.findByNameContainingIgnoreCase(name);
-}
+    @Override
+    public List<Pokemon> searchPokemonByName(String name) {
+        return pokemonRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public List<Pokemon> getPokemonsByGeneration(Integer generation) {
+        return pokemonRepository.findByGeneration(generation);
+    }
+
+    @Override
+    public List<Pokemon> getStarterPokemons() {
+        return pokemonRepository.findByIsStarter(true);
+    }
+
+    @Override
+    public List<Pokemon> getMegaEvolutionPokemons() {
+        return pokemonRepository.findByHasMegaEvolution(true);
+    }
+
+    @Override
+    public List<Pokemon> getShinyPokemons() {
+        return pokemonRepository.findByIsShiny(true);
+    }
 }

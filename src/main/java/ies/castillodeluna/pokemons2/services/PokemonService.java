@@ -23,4 +23,8 @@ public interface PokemonService {
     List<Pokemon> filterByHitPoints(Long min, Long max);
     Map<String, Object> getPokedexStats();
     List<Pokemon> searchPokemonByName(String name);
+    List<Pokemon> getPokemonsByGeneration(Integer generation);
+    List<Pokemon> getStarterPokemons();
+    List<Pokemon> getMegaEvolutionPokemons();
+    List<Pokemon> getShinyPokemons();
 }

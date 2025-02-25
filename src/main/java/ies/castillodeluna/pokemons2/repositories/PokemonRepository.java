@@ -17,6 +17,14 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
     List<Pokemon> findByLevelBetween(int min, int max);
     
     List<Pokemon> findByHitPointsBetween(Long min, Long max);
+    
+    List<Pokemon> findByGeneration(Integer generation);
+    
+    List<Pokemon> findByIsStarter(Boolean isStarter);
+    
+    List<Pokemon> findByHasMegaEvolution(Boolean hasMegaEvolution);
+    
+    List<Pokemon> findByIsShiny(Boolean isShiny);
 
     @Query("SELECT AVG(p.hitPoints) FROM Pokemon p")
     Double findAverageHitPoints();
