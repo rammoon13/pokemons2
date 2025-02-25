@@ -238,7 +238,7 @@ public class PokemonController {
      * Obtiene el pokemon que contenga la palabra en el query.
      * En Postman:
      * - Método: GET
-     * - URL: http://localhost:8080/api/pokemons/seach?query=Char
+     * - URL: http://localhost:8080/api/pokemons/search?query=Char
      */
     @GetMapping("/search") // probado
     public List<Pokemon> searchPokemon(@RequestParam String query) {
@@ -291,5 +291,44 @@ public class PokemonController {
     @GetMapping("/filter/generation/{generation}")
     public List<Pokemon> getPokemonsByGeneration(@PathVariable int generation) {
         return pokemonService.getPokemonsByGeneration(generation);
+    }
+
+    /**
+     * PUT /api/pokemons/{id}/shiny
+     * Activa o desactiva el estado shiny de un Pokémon.
+     * En Postman:
+     * - Método: PUT
+     * - URL: http://localhost:8080/api/pokemons/{id}/shiny
+     * - Body (JSON): { "isShiny": true }
+     */
+    @PutMapping("/{id}/shiny")
+    public Pokemon updatePokemonShiny(@PathVariable Long id, @RequestBody Map<String, Boolean> shinyRequest) {
+        return pokemonService.updatePokemonShiny(id, shinyRequest.get("isShiny"));
+    }
+
+    /**
+     * PUT /api/pokemons/{id}/mega
+     * Activa o desactiva la megaevolución de un Pokémon.
+     * En Postman:
+     * - Método: PUT
+     * - URL: http://localhost:8080/api/pokemons/{id}/mega
+     * - Body (JSON): { "hasMegaEvolution": true }
+     */
+    @PutMapping("/{id}/mega")
+    public Pokemon updatePokemonMega(@PathVariable Long id, @RequestBody Map<String, Boolean> megaRequest) {
+        return pokemonService.updatePokemonMega(id, megaRequest.get("hasMegaEvolution"));
+    }
+
+    /**
+     * PUT /api/pokemons/{id}/starter
+     * Define si un Pokémon es inicial o no.
+     * En Postman:
+     * - Método: PUT
+     * - URL: http://localhost:8080/api/pokemons/{id}/starter
+     * - Body (JSON): { "isStarter": true }
+     */
+    @PutMapping("/{id}/starter")
+    public Pokemon updatePokemonStarter(@PathVariable Long id, @RequestBody Map<String, Boolean> starterRequest) {
+        return pokemonService.updatePokemonStarter(id, starterRequest.get("isStarter"));
     }
 }

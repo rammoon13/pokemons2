@@ -132,11 +132,21 @@ public class PokemonServiceImpl implements PokemonService {
         Map<String, Long> typeCounts = pokemonRepository.countPokemonsByType()
             .stream()
             .collect(Collectors.toMap(
-                data -> (String) data[0],
-                data -> (Long) data[1]
+            data -> (String) data[0],
+            data -> (Long) data[1]
             ));
         
         stats.put("pokemon_by_type", typeCounts);
+
+        Map<String, Long> generationCounts = pokemonRepository.countPokemonsByGeneration()
+            .stream()
+            .collect(Collectors.toMap(
+            data -> "Generacion " + data[0],
+            data -> (Long) data[1]
+            ));
+        
+        stats.put("pokemon_by_generation", generationCounts);
+        stats.put("pokemon_shinys", pokemonRepository.countPokemonByShiny());
         return stats;
     }
 
@@ -163,5 +173,38 @@ public class PokemonServiceImpl implements PokemonService {
     @Override
     public List<Pokemon> getShinyPokemons() {
         return pokemonRepository.findByIsShiny(true);
+    }
+
+    @Override
+    public Pokemon updatePokemonShiny(Long id, boolean isShiny) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setShiny(isShiny);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public Pokemon updatePokemonMega(Long id, boolean hasMegaEvolution) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setMegaEvolution(hasMegaEvolution);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public Pokemon updatePokemonStarter(Long id, boolean isStarter) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setStarter(isStarter);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
     }
 }

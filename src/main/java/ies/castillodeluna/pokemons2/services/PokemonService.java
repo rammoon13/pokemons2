@@ -27,4 +27,7 @@ public interface PokemonService {
     List<Pokemon> getStarterPokemons();
     List<Pokemon> getMegaEvolutionPokemons();
     List<Pokemon> getShinyPokemons();
+    Pokemon updatePokemonShiny(Long id, boolean isShiny);
+    Pokemon updatePokemonMega(Long id, boolean hasMegaEvolution);
+    Pokemon updatePokemonStarter(Long id, boolean isStarter);
 }

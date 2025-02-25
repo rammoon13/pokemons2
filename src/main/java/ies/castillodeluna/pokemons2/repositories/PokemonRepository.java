@@ -36,4 +36,13 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
     @Query("SELECT p.type, COUNT(p) FROM Pokemon p GROUP BY p.type")
     List<Object[]> countPokemonsByType();
+
+    @Query("SELECT p.isShiny, COUNT(p) FROM Pokemon p WHERE p.isShiny IS TRUE GROUP BY p.isShiny")
+    List<Object[]> countPokemonByShiny();
+
+    @Query("SELECT p.hasMegaEvolution, COUNT(p) FROM Pokemon p WHERE p.hasMegaEvolution IS TRUE GROUP BY p.hasMegaEvolution")
+    List<Object[]> countPokemonByMegaEvolution();
+
+    @Query("SELECT p.generation, COUNT(p) FROM Pokemon p GROUP BY p.generation")
+    List<Object[]> countPokemonsByGeneration();
 }

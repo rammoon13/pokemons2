@@ -74,4 +74,26 @@ public class Pokemon {
     
     public Integer getGeneration() { return generation; }
     public void setGeneration(Integer generation) { this.generation = generation; }
+
+
+    public void setShiny(boolean shiny) {
+        this.isShiny = shiny;
+    }
+
+    public boolean isMegaEvolution() {
+        return hasMegaEvolution;
+    }
+
+    public void setMegaEvolution(boolean megaEvolution) {
+        this.hasMegaEvolution = megaEvolution;
+    }
+
+    public boolean isStarter() {
+        return isStarter;
+    }
+
+    public void setStarter(boolean starter) {
+        this.isStarter = starter;
+    }
+    
 }
