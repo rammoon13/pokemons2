@@ -331,4 +331,115 @@ public class PokemonController {
     public Pokemon updatePokemonStarter(@PathVariable Long id, @RequestBody Map<String, Boolean> starterRequest) {
         return pokemonService.updatePokemonStarter(id, starterRequest.get("isStarter"));
     }
+
+    /**
+     * POST /api/pokemons/random
+     * Genera y guarda una lista de Pokémon aleatorios.
+     * En Postman:
+     * - Método: POST
+     * - URL: http://localhost:8080/api/pokemons/random
+     * - Body (JSON): {"count": 5}
+     */
+    @PostMapping("/random") // probado 
+    public List<Pokemon> createRandomPokemons(@RequestBody Map<String, Integer> request) {
+        return pokemonService.createRandomPokemons(request.get("count"));
+    }
+
+     /**
+     * POST /api/pokemons/duplicate/{id}
+     * Crea un duplicado de un pokemon mediante su id
+     * En Postman:
+     * - Método: POST
+     * - URL: http://localhost:8080/api/pokemons/duplicate/1
+     */
+    @PostMapping("/duplicate/{id}") // probado
+    public Pokemon duplicatePokemon(@PathVariable Long id) {
+        return pokemonService.duplicatePokemon(id);
+    }
+
+     /**
+     * POST /api/pokemons/{id}/make-legendary
+     * Hace un pokemon legendario y sube todas sus stats
+     * En Postman:
+     * - Método: POST
+     * - URL: http://localhost:8080/api/pokemons/1/make-legendary
+     */
+    @PostMapping("/{id}/make-legendary") // probado
+    public Pokemon makePokemonLegendary(@PathVariable Long id) {
+        return pokemonService.makePokemonLegendary(id);
+    }
+
+    /**
+     * DELETE /api/pokemons/type/{type}
+     * Elimina a todos los pokemons de un tipo
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/type/Fuego
+     */
+    @DeleteMapping("/type/{type}") // probado 
+    public void deletePokemonsByType(@PathVariable String type) {
+        pokemonService.deletePokemonsByType(type);
+    }
+
+    /**
+     * DELETE /api/pokemons/under-level/{level}
+     * Elimina a todos los pokemons inferiores a cierto nivel
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/under-level/5
+     */
+    @DeleteMapping("/under-level/{level}") // probado
+    public void deletePokemonsUnderLevel(@PathVariable int level) {
+        pokemonService.deletePokemonsUnderLevel(level);
+    }
+
+
+    /**
+     * DELETE /api/pokemons/legendary}
+     * Elimina a todos los pokemons legendarios
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/legendary
+     */
+    @DeleteMapping("/legendary") // probado
+    public void deleteLegendaryPokemons() {
+        pokemonService.deleteLegendaryPokemons();
+    }
+
+    /**
+     * DELETE /api/pokemons/delete-all}
+     * Elimina a todos los pokemons 
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/delete-all
+     */
+    @DeleteMapping("/delete-all") // probado
+    public void deleteAllPokemons() {
+        pokemonService.deleteAllPokemons();
+    }
+
+    /**
+     * DELETE /api/pokemons//weak/{hitPoints}/{level}}
+     * Elimina a todos los pokemons de menor vida y nivel
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons//weak/50/20
+     */
+    @DeleteMapping("/weak/{hitPoints}/{level}") // probado
+    public void deleteWeakPokemons(@PathVariable int hitPoints, @PathVariable int level) {
+        pokemonService.deleteWeakPokemons(hitPoints, level);
+    }
+
+    /**
+     * DELETE /api/pokemons/generation/{generation}
+     * Elimina a todos los pokemons de una generacion
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/generation/1
+     */
+    @DeleteMapping("/generation/{generation}") // probado
+    public void deletePokemonByGeneration(@PathVariable int generation) {
+        pokemonService.deletePokemonByGeneration(generation);
+    }
+
 }

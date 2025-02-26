@@ -30,4 +30,13 @@ public interface PokemonService {
     Pokemon updatePokemonShiny(Long id, boolean isShiny);
     Pokemon updatePokemonMega(Long id, boolean hasMegaEvolution);
     Pokemon updatePokemonStarter(Long id, boolean isStarter);
+    List<Pokemon> createRandomPokemons(int count);
+    Pokemon duplicatePokemon(Long id);
+    Pokemon makePokemonLegendary(Long id);
+    void deletePokemonsByType(String type);
+    void deletePokemonsUnderLevel(int level);
+    void deleteLegendaryPokemons();
+    void deleteAllPokemons();
+    void deleteWeakPokemons(int hitPoints, int level);
+    void deletePokemonByGeneration(int generation);
 }

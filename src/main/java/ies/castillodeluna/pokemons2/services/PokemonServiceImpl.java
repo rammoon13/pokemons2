@@ -4,10 +4,12 @@ import ies.castillodeluna.pokemons2.models.Pokemon;
 import ies.castillodeluna.pokemons2.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -207,4 +209,95 @@ public class PokemonServiceImpl implements PokemonService {
         }
         return null;
     }
+
+    @Override
+    public List<Pokemon> createRandomPokemons(int count) {
+        List<Pokemon> randomPokemons = new ArrayList<>();
+        String[] types = {"Fuego", "Agua", "Planta", "Eléctrico", "Roca", "Volador"};
+        Random random = new Random();
+
+        for (int i = 0; i < count; i++) {
+            Pokemon pokemon = new Pokemon();
+            pokemon.setName("Pokemon" + random.nextInt(1000));
+            pokemon.setType(types[random.nextInt(types.length)]);
+            pokemon.setHitPoints((long) (30 + random.nextInt(71))); // Entre 30 y 100
+            pokemon.setLevel(1 + random.nextInt(50)); // Entre 1 y 50
+            pokemon.setIsShiny(random.nextBoolean());
+            pokemon.setHasMegaEvolution(random.nextBoolean());
+            pokemon.setIsStarter(random.nextBoolean());
+            pokemon.setGeneration(1 + random.nextInt(8)); // Entre 1 y 8
+            randomPokemons.add(pokemon);
+        }
+
+        return pokemonRepository.saveAll(randomPokemons);
+    }
+
+    @Override
+    public Pokemon duplicatePokemon(Long id) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon original = optionalPokemon.get();
+            Pokemon duplicate = new Pokemon(null, original.getName() + " Clone",
+                    original.getType(), original.getHitPoints(), original.getLevel(),
+                    original.getIsShiny(), original.getHasMegaEvolution(),
+                    original.getIsStarter(), original.getGeneration());
+
+            return pokemonRepository.save(duplicate);
+        }
+        return null;
+    }
+
+    @Override
+    public Pokemon makePokemonLegendary(Long id) {
+        Optional<Pokemon> optionalPokemon = pokemonRepository.findById(id);
+        if (optionalPokemon.isPresent()) {
+            Pokemon pokemon = optionalPokemon.get();
+            pokemon.setName("Legendary " + pokemon.getName());
+            pokemon.setHitPoints(pokemon.getHitPoints() + 50);
+            pokemon.setLevel(pokemon.getLevel() + 10);
+            return pokemonRepository.save(pokemon);
+        }
+        return null;
+    }
+
+    @Override
+    public void deletePokemonsByType(String type) {
+        List<Pokemon> pokemons = pokemonRepository.findByType(type);
+        pokemonRepository.deleteAll(pokemons);
+    }
+
+    @Override
+    public void deletePokemonsUnderLevel(int level) {
+        List<Pokemon> pokemons = pokemonRepository.findByLevelBetween(1, level);
+        pokemonRepository.deleteAll(pokemons);
+    }
+
+    @Override
+    public void deleteLegendaryPokemons() {
+        List<Pokemon> legendaryPokemons = pokemonRepository.findByNameContainingIgnoreCase("Legendary");
+        pokemonRepository.deleteAll(legendaryPokemons);
+    }
+
+    @Override
+    public void deleteAllPokemons() {
+        pokemonRepository.deleteAll();
+    }
+
+    @Override
+    public void deleteWeakPokemons(int hitPoints, int level) {
+        List<Pokemon> weakPokemons = pokemonRepository.findAll().stream()
+                .filter(pokemon -> pokemon.getHitPoints() < hitPoints && pokemon.getLevel() < level)
+                .collect(Collectors.toList());
+
+        pokemonRepository.deleteAll(weakPokemons);
+    }
+
+
+    @Override
+    public void deletePokemonByGeneration(int generation) {
+        List<Pokemon> pokemons = pokemonRepository.findByGeneration(generation);
+        pokemonRepository.deleteAll(pokemons);
+    }
+
+
 }
