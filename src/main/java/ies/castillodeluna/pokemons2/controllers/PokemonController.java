@@ -442,4 +442,28 @@ public class PokemonController {
         pokemonService.deletePokemonByGeneration(generation);
     }
 
+    /**
+     * DELETE /api/pokemons/longnames/{lenght}
+     * Elimina a todos los pokemons que su nombre tenga un tamaño de x
+     * En Postman:
+     * - Método: DELETE
+     * - URL: http://localhost:8080/api/pokemons/longnames/10
+     */
+    @DeleteMapping("/longnames/{length}")
+    public void deletePokemonsWithLongNames(@PathVariable int length) {
+        pokemonService.deletePokemonsWithLongNames(length);
+    }
+
+    /**
+     * GET /api/pokemons/double-type
+     * Obtiene los pokemons que tienen doble tipo
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/double-type
+     */
+    @GetMapping("/double-type") // probado
+    public List<Pokemon> searchPokemonByDoubleType() {
+        return pokemonService.searchPokemonByDoubleType();
+    }
+
 }

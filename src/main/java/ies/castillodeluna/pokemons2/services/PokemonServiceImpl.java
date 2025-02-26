@@ -218,7 +218,7 @@ public class PokemonServiceImpl implements PokemonService {
 
         for (int i = 0; i < count; i++) {
             Pokemon pokemon = new Pokemon();
-            pokemon.setName("Pokemon" + random.nextInt(1000));
+            pokemon.setName("Pokemon " + random.nextInt(1000));
             pokemon.setType(types[random.nextInt(types.length)]);
             pokemon.setHitPoints((long) (30 + random.nextInt(71))); // Entre 30 y 100
             pokemon.setLevel(1 + random.nextInt(50)); // Entre 1 y 50
@@ -299,5 +299,20 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonRepository.deleteAll(pokemons);
     }
 
+    @Override
+    public void deletePokemonsWithLongNames(int length) {
+        List<Pokemon> pokemons = pokemonRepository.findAll().stream()
+                .filter(pokemon -> pokemon.getName().length() > length)
+                .collect(Collectors.toList());
+
+        if (!pokemons.isEmpty()) {
+            pokemonRepository.deleteAll(pokemons);
+        }
+    }
+
+    @Override
+    public List<Pokemon> searchPokemonByDoubleType() {
+        return pokemonRepository.findByTypeContaining("/");
+    }
 
 }

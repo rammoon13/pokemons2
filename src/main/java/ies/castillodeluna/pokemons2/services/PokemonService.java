@@ -39,4 +39,6 @@ public interface PokemonService {
     void deleteAllPokemons();
     void deleteWeakPokemons(int hitPoints, int level);
     void deletePokemonByGeneration(int generation);
+    void deletePokemonsWithLongNames(int length);
+    List<Pokemon> searchPokemonByDoubleType();
 }
