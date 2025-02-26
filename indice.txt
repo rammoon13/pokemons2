@@ -1,0 +1,38 @@
+| **Método** | **Endpoint** | **Descripción** | 
+|------------|-------------|----------------|
+| **🟢 GET** | `/` | Obtiene todos los Pokémon. |
+| **🟢 GET** | `/{id}` | Obtiene un Pokémon por su ID. |
+| **🟢 GET** | `/name/{name}` | Obtiene un Pokémon por su nombre. |
+| **🟢 GET** | `/top-hp` | Obtiene los 5 Pokémon con más HP. |
+| **🟢 GET** | `/level-range?min=X&max=Y` | Obtiene los Pokémon dentro de un rango de niveles. |
+| **🟢 GET** | `/filter?type=X` | Filtra Pokémon por tipo. |
+| **🟢 GET** | `/hitpoints?min=X&max=Y` | Filtra Pokémon por un rango de HP. |
+| **🟢 GET** | `/stats` | Obtiene estadísticas de la Pokédex. |
+| **🟢 GET** | `/search?query=X` | Busca Pokémon cuyos nombres contengan la palabra `X`. |
+| **🟢 GET** | `/filter/shiny` | Obtiene todos los Pokémon shiny. |
+| **🟢 GET** | `/filter/mega` | Obtiene todos los Pokémon con megaevolución. |
+| **🟢 GET** | `/filter/starter` | Obtiene todos los Pokémon iniciales. |
+| **🟢 GET** | `/filter/generation/{generation}` | Obtiene los Pokémon de una generación específica. |
+| **🟢 GET** | `/double-type` | Obtiene los Pokémon con doble tipo. |
+| **🟢 GET** | `/count?type=X` | Obtiene la cantidad de Pokémon de un tipo. |
+| **🔵 POST** | `/` | Crea un nuevo Pokémon. |
+| **🔵 POST** | `/bulk` | Crea múltiples Pokémon en una sola petición. |
+| **🔵 POST** | `/random` | Genera y guarda Pokémon aleatorios. |
+| **🔵 POST** | `/duplicate/{id}` | Crea un duplicado de un Pokémon por su ID. |
+| **🔵 POST** | `/{id}/make-legendary` | Convierte un Pokémon en legendario y mejora sus estadísticas. |
+| **🟠 PUT** | `/{id}/level` | Actualiza el nivel de un Pokémon. |
+| **🟠 PUT** | `/{id}/type` | Actualiza el tipo de un Pokémon. |
+| **🟠 PUT** | `/{id}/name` | Actualiza el nombre de un Pokémon. |
+| **🟠 PUT** | `/level-up/type/{type}` | Sube de nivel todos los Pokémon de un tipo específico. |
+| **🟠 PUT** | `/evolve/{id}` | Evoluciona un Pokémon cambiando su nombre, tipo y HP. |
+| **🟠 PUT** | `/{id}/shiny` | Activa o desactiva el estado shiny de un Pokémon. |
+| **🟠 PUT** | `/{id}/mega` | Activa o desactiva la megaevolución de un Pokémon. |
+| **🟠 PUT** | `/{id}/starter` | Define si un Pokémon es inicial o no. |
+| **🔴 DELETE** | `/{id}` | Elimina un Pokémon por su ID. |
+| **🔴 DELETE** | `/type/{type}` | Elimina todos los Pokémon de un tipo específico. |
+| **🔴 DELETE** | `/under-level/{level}` | Elimina Pokémon con nivel inferior a `X`. |
+| **🔴 DELETE** | `/legendary` | Elimina todos los Pokémon legendarios. |
+| **🔴 DELETE** | `/delete-all` | Elimina todos los Pokémon de la base de datos. |
+| **🔴 DELETE** | `/weak/{hitPoints}/{level}` | Elimina Pokémon con menos de `X` HP y nivel menor a `Y`. |
+| **🔴 DELETE** | `/generation/{generation}` | Elimina todos los Pokémon de una generación específica. |
+| **🔴 DELETE** | `/longnames/{length}` | Elimina Pokémon con nombres de más de `X` caracteres. |
