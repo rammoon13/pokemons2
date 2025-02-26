@@ -41,4 +41,5 @@ public interface PokemonService {
     void deletePokemonByGeneration(int generation);
     void deletePokemonsWithLongNames(int length);
     List<Pokemon> searchPokemonByDoubleType();
+    Map<String, Object> countPokemonsByType(String type);
 }

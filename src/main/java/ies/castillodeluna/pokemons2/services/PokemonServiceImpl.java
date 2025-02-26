@@ -315,4 +315,14 @@ public class PokemonServiceImpl implements PokemonService {
         return pokemonRepository.findByTypeContaining("/");
     }
 
+    @Override
+    public Map<String, Object> countPokemonsByType(String type) {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total_pokemons", pokemonRepository.findByType(type).size());
+        stats.put("",pokemonRepository.findByType(type));
+
+        return stats;
+    }
+
+
 }

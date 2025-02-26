@@ -466,4 +466,16 @@ public class PokemonController {
         return pokemonService.searchPokemonByDoubleType();
     }
 
+    /**
+     * GET /api/pokemons/count?type=Agua
+     * Obtiene la cantidad de pokemons de un tipo
+     * En Postman:
+     * - Método: GET
+     * - URL: http://localhost:8080/api/pokemons/count?type=Fuego
+     */
+    @GetMapping("/count") // probado
+    public Map<String, Object> countPokemonsByType(@RequestParam String type) {
+        return pokemonService.countPokemonsByType(type);
+    }
+
 }
